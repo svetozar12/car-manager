@@ -9,7 +9,8 @@
     "format": "prettier --write .",
     "prepare": "echo prepare",
     "common": "pnpm --filter common",
-    "web": "pnpm --filter web"
+    "web": "pnpm --filter web",
+    "api": "pnpm --filter api"
   },
   "keywords": [],
   "author": "",
