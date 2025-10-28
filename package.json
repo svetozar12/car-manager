@@ -35,5 +35,12 @@
   },
   "dependencies": {
     "path": "^0.12.7"
+  },
+  "pnpm": {
+    "overrides": {
+      "vite": "7.1.12",
+      "rollup": "4.52.5",
+      "@types/node": "24.9.1"
+    }
   }
 }

@@ -1,7 +1,6 @@
 import express from 'express';
 import rateLimit from 'express-rate-limit';
 import cors from 'cors';
-import { logger } from './utils/logger';
 import { router } from './routes';
 
 const app = express();
@@ -31,7 +30,4 @@ app.use(express.json());
 
 app.use('/', router);
 
-const PORT = process.env.PORT || 5005;
-app.listen(PORT, () => {
-  logger.info(`Server is running on port http://localhost:${PORT}`);
-});
+export default app;
