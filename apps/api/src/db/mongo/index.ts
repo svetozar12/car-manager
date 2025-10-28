@@ -7,13 +7,12 @@ const userSchema = new Schema({
 });
 
 const User = mongoose.model('User', userSchema);
-run().catch((err) => console.log(err));
 
 export async function disconnect() {
-  return mongoose.connection.getClient().close();
+  return mongoose.connection.close();
 }
 
-async function run() {
+export async function connectMongo() {
   logger.debug('test');
   if (mongoose.connection.readyState === 1)
     return logger.info('Already connected to mongo');
