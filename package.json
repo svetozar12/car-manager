@@ -9,6 +9,7 @@
     "format": "prettier --write .",
     "prepare": "echo prepare",
     "common": "pnpm --filter common",
+    "carQuerySdk": "pnpm --filter car-query-sdk",
     "web": "pnpm --filter web",
     "api": "pnpm --filter api"
   },

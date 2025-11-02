@@ -1,5 +1,6 @@
 import { createLogger, format, transports } from 'winston';
 import { Envs } from './env';
+
 // TODO Maybe make this a package
 export const logger = createLogger({
   level: Envs.LOG_LEVEL,

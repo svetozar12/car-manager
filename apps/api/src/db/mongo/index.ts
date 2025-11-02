@@ -1,19 +1,12 @@
-import mongoose, { Schema } from 'mongoose';
+import mongoose from 'mongoose';
 import { logger } from '../../utils/logger';
 import { Envs } from '../../utils/env';
-
-const userSchema = new Schema({
-  name: { type: String, required: true },
-});
-
-const User = mongoose.model('User', userSchema);
 
 export async function disconnect() {
   return mongoose.connection.close();
 }
 
 export async function connectMongo() {
-  logger.debug('test');
   if (mongoose.connection.readyState === 1)
     return logger.info('Already connected to mongo');
 
@@ -26,9 +19,4 @@ export async function connectMongo() {
   await mongoose.connect(Envs.MONGO_URL);
 
   logger.info('connected to mongo');
-
-  const cat = new User({
-    name: 'Bill',
-  });
-  await cat.save();
 }

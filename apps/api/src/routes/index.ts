@@ -1,5 +1,7 @@
 import express from 'express';
 import { userRouter } from './user/user.route';
+import { carRouter } from './car/car.route';
+import { authRouter } from './auth/auth.route';
 export const router = express.Router();
 
 router.get('/', (_, res) => {
@@ -9,7 +11,12 @@ router.get('/', (_, res) => {
   });
 });
 
-const routes = [{ route: '/user', routerInstance: userRouter }];
+const routes = [
+  { route: '/user', routerInstance: userRouter },
+  { route: '/auth', routerInstance: authRouter },
+  // { route: '/car', routerInstance: carRouter },
+];
+
 routes.forEach(({ route, routerInstance }) =>
   router.use(route, routerInstance),
 );
