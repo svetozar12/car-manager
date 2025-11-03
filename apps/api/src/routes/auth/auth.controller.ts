@@ -3,13 +3,14 @@ import { sendEmail } from '../../utils/auth';
 import { importTemplate, templateEnum } from '../../utils/emailTemplate';
 import { redis } from '../../db/redis';
 import { Envs } from '../../utils/env';
+import { logger } from '../../utils/logger';
 
 export async function sendCode(to: string) {
   const code = generateCode();
   const sendCodeTemplate = await importTemplate(templateEnum.SEND_CODE, {
     code,
   });
-  await redis.set(`verify:${to}:code`, code);
+  await redis.set(`verify:${to}:code`, hashCode(code), 'EX', 12000);
   await redis.set(`verify:${to}:attempts`, 0);
 
   await sendEmail(to, 'Your code for Car Manager', sendCodeTemplate);
@@ -71,6 +72,7 @@ export async function verifyEmailCode(params: {
   ]);
 
   if (!storedHash || codeTtl <= 0) {
+    logger.error(['FAILED 1', storedHash, codeTtl]);
     return false;
   }
 
@@ -81,12 +83,16 @@ export async function verifyEmailCode(params: {
   }
 
   if (attempts > MAX_ATTEMPTS) {
+    logger.error('FAILED 2');
+
     return false; // locked out
   }
 
   const matches = safeEqualHex(storedHash, hashCode(code));
 
   if (!matches) {
+    logger.error(['FAILED 3', storedHash, code]);
+
     return false; // wrong code (attempt already bumped)
   }
 

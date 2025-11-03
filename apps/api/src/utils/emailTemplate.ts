@@ -4,6 +4,8 @@ import { logger } from './logger';
 export enum templateEnum {
   SEND_CODE,
 }
+import { pathToFileURL } from 'url';
+const importMetaUrl = pathToFileURL(__filename).href;
 
 export async function importTemplate(
   templateType: templateEnum,
@@ -11,7 +13,7 @@ export async function importTemplate(
 ) {
   const templateDir = getTemplateDir(templateType);
   logger.debug(['Loading dir', templateDir]);
-  const template = readFileSync(new URL(templateDir, import.meta.url), 'utf8');
+  const template = readFileSync(new URL(templateDir, importMetaUrl), 'utf8');
 
   const output = template.replace(/\{([^}]+)\}/g, (_, key) =>
     Object.prototype.hasOwnProperty.call(mapValues, key)

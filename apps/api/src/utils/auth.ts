@@ -16,8 +16,8 @@ export async function sendEmail(to: string, subject: string, html = '') {
   if (Envs.DISABLE_MAIL) {
     logger.info('Emails are disabled');
     logger.info('=========== Your email content ===========');
-    logger.info('TO', to);
-    logger.info('SUBJECT:', subject);
+    logger.info(['TO', to]);
+    logger.info(['SUBJECT:', subject]);
     logger.info('HTML:', html);
 
     return;
